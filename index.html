@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Colorful HTML</title>
+    <style>
+      body {
+        background: linear-gradient(to right, #ffc0cb, #00ffff);
+      }
+      h1 {
+        color: purple;
+      }
+      p {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to my Colorful HTML page!</h1>
+    <p>Type something here:</p>
+    <form method="post">
+      <input type="text" name="myInput"><br><br>
+      <button type="submit" name="save">Save</button> <!-- add a submit button -->
+    </form>
+    <div id="output">
+      <?php
+        if (isset($_POST['save'])) { // check if the form was submitted
+          $inputText = $_POST['myInput']; // get the entered text
+          $filePath = "saved_text.txt";
+          if (is_writable($filePath)) { // check if the file is writable
+            $file = fopen($filePath, "w"); // open a file for writing
+            if ($file === false) { // check if the file could not be opened
+              echo "Error: Could not open file for writing.";
+            } else {
+              if (fwrite($file, $inputText) === false) { // check if the text could not be written to the file
+                echo "Error: Could not write text to file.";
+              } else {
+                fclose($file); // close the file
+                echo "Text saved successfully!";
+              }
+            }
+          } else {
+            echo "Error: File is not writable.";
+          }
+        }
+      ?>
+    </div>
+    <img src="https://via.placeholder.com/150" alt="Placeholder Image">
+  </body>
+</html>
